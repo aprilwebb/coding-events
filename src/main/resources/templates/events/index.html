@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head>
+<head th:replace="fragments :: head"></head>
     <meta charset="UTF-8"/>
     <title>Coding Events</title>
 </head>
@@ -8,11 +8,21 @@
 
 <h1>All Events</h1>
 
-<ul>
-    <th:block th:each="event : ${events}">
-        <li th:text="${event}"></li>
-    </th:block>
-</ul>
+<table class="center">
+    <thead>
+        <tr>
+            <th>Event Name</th>
+            <th>Description</th>
+            <th>Address</th>
+        </tr>
+    </thead>
+    <tr th:each="event : ${events}">
+        <td th:text="${event.key}"></td>
+        <td th:text="${event.value}"></td>
+        <td th:replace="fragments :: address"></td>
+    </tr>
+
+</table>
 
 </body>
 </html>
