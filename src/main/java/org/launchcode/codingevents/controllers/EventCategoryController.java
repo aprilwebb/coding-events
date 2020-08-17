@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -51,4 +48,23 @@ public class EventCategoryController {
         return "redirect:";
     }
 
+    @GetMapping("delete")
+    public String displayDeleteEventCategoryForm(Model model) {
+        model.addAttribute("title", "Delete Category");
+        model.addAttribute("categories", eventCategoryRepository.findAll());
+        return "eventCategories/delete";
+    }
+
+    @PostMapping("delete")
+    public String processDeleteEventsForm(@RequestParam(required = false) int[] eventCategoryIds) {
+
+        if (eventCategoryIds != null) {
+            for (int id : eventCategoryIds) {
+                eventCategoryRepository.deleteById(id);
+            }
+        }
+
+        return "redirect:";
+
+    }
 }
